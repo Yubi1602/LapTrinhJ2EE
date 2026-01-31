@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh Sửa Thông Tin Sách</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fff4e5; /* Màu nền hơi cam nhẹ để phân biệt với trang thêm */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 450px;
+            background-color: #ffffff;
+        }
+        .btn-warning { color: white; font-weight: 600; padding: 10px 20px; }
+        .btn-warning:hover { color: white; background-color: #e67e22; }
+        .form-label { font-weight: 600; color: #5d6d7e; }
+        .form-control:focus { box-shadow: 0 0 0 0.25rem rgba(243, 156, 18, 0.25); border-color: #f39c12; }
+        .header-icon { font-size: 3rem; color: #f39c12; }
+    </style>
+</head>
+<body>
+
+<div class="card p-4">
+    <div class="text-center mb-4">
+        <div class="header-icon mb-2"><i class="bi bi-pencil-square"></i></div>
+        <h3 class="fw-bold">Chỉnh Sửa Sách</h3>
+        <p class="text-muted">Cập nhật lại thông tin cho cuốn sách này</p>
+    </div>
+
+    <form th:action="@{/books/edit}" th:object="${book}" method="post">
+
+        <input type="hidden" th:field="*{id}" />
+
+        <div class="mb-3">
+            <label for="title" class="form-label">Tiêu đề sách</label>
+            <div class="input-group">
+                <span class="input-group-text bg-light"><i class="bi bi-bookmark-star"></i></span>
+                <input type="text" id="title" th:field="*{title}" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="author" class="form-label">Tác giả</label>
+            <div class="input-group">
+                <span class="input-group-text bg-light"><i class="bi bi-person-badge"></i></span>
+                <input type="text" id="author" th:field="*{author}" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-warning text-uppercase">
+                <i class="bi bi-save2-fill me-2"></i> Lưu thay đổi
+            </button>
+            <a th:href="@{/books}" class="btn btn-light text-secondary">
+                <i class="bi bi-x-circle me-1"></i> Hủy và quay lại
+            </a>
+        </div>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

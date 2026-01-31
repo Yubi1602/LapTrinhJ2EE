@@ -6,54 +6,45 @@ import lombok.Setter;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
-@Setter
-@Getter
 @Service
 public class BookService {
     private List<Book> books = new ArrayList<>();
+    private Long nextId = 1L;
 
-    // Hàm khởi tạo để tạo sẵn 5 cuốn sách mẫu
     public BookService() {
-        books.add(new Book(1, "Lập trình Java Cơ Bản", "Nguyễn Văn A"));
-        books.add(new Book(2, "Spring Boot Cho Người Mới", "Trần Thị B"));
-        books.add(new Book(3, "Cấu trúc dữ liệu & Giải thuật", "Lê Văn C"));
-        books.add(new Book(4, "Thiết kế Web với J2EE", "Phạm Minh D"));
-        books.add(new Book(5, "Tối ưu hóa mã nguồn", "Hoàng Gia E"));
+        addBook(new Book(null, "Lập trình Java nâng cao", "Nguyễn Văn A"));
+        addBook(new Book(null, "Học Spring Boot trong 24h", "Trần Thị B"));
+        addBook(new Book(null, "Cấu trúc dữ liệu và Giải thuật", "Lê Văn C"));
+        addBook(new Book(null, "Thiết kế Web với Thymeleaf", "Phạm Minh D"));
     }
 
-    // Lấy toàn bộ danh sách sách
     public List<Book> getAllBooks() {
         return books;
     }
 
-    // Tìm sách theo ID
-    public Book getBookById(int id) {
-        return books.stream()
-                .filter(book -> book.getId() == id)
-                .findFirst()
-                .orElse(null);
-    }
-
-    // Thêm mới một cuốn sách
     public void addBook(Book book) {
+        book.setId(nextId++);
         books.add(book);
     }
 
-    // Cập nhật thông tin sách đã tồn tại
-    public void updateBook(int id, Book updatedBook) {
+    public Optional<Book> getBookById(Long id) {
+        return books.stream().filter(book -> book.getId().equals(id)).findFirst();
+    }
+
+    public void updateBook(Book updatedBook) {
         books.stream()
-                .filter(book -> book.getId() == id)
+                .filter(book -> book.getId().equals(updatedBook.getId()))
                 .findFirst()
                 .ifPresent(book -> {
                     book.setTitle(updatedBook.getTitle());
                     book.setAuthor(updatedBook.getAuthor());
-                }); // Dấu đóng ngoặc phải nằm ở đây
+                });
     }
 
-    // Xóa sách khỏi danh sách theo ID
-    public void deleteBook(int id) {
-        books.removeIf(book -> book.getId() == id);
+    public void deleteBook(Long id) {
+        books.removeIf(book -> book.getId().equals(id));
     }
 }

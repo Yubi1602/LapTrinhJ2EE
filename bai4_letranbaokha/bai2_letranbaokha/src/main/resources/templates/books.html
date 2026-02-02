@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"> <head>
+    <meta charset="UTF-8">
+    <title>Quản lý Thư viện</title>
+    <style>
+        .card { border: none; border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
+        .table thead { background-color: #e9ecef; }
+        .btn-action { padding: 5px 10px; font-size: 0.85rem; border-radius: 6px; }
+        .badge-author { background-color: #e3f2fd; color: #0d47a1; font-weight: 500; padding: 5px 10px; border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<div layout:fragment="content"> <div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="text-primary fw-bold mb-0">
+                <i class="bi bi-bookshelf"></i> QUẢN LÝ THƯ VIỆN
+            </h2>
+            <small class="text-muted" th:if="${books != null}" th:text="'Tổng cộng: ' + ${books.size()} + ' cuốn sách'"></small>
+        </div>
+        <a th:href="@{/books/add}" class="btn btn-primary shadow-sm px-4">
+            <i class="bi bi-plus-circle-fill me-2"></i>Thêm sách mới
+        </a>
+    </div>
+
+    <div class="card p-4">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                <tr>
+                    <th style="width: 10%;">ID</th>
+                    <th style="width: 45%;">Tiêu đề</th>
+                    <th style="width: 25%;">Tác giả</th>
+                    <th style="width: 20%;" class="text-center">Hành động</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="b : ${books}">
+                    <td class="fw-bold text-muted" th:text="'#' + ${b.id}"></td>
+                    <td th:text="${b.title}" class="fw-semibold"></td>
+                    <td>
+                        <span class="badge-author" th:text="${b.author}"></span>
+                    </td>
+                    <td class="text-center">
+                        <div class="d-flex justify-content-center gap-2">
+                            <a th:href="@{/books/edit/{id}(id=${b.id})}" class="btn btn-outline-warning btn-action">
+                                <i class="bi bi-pencil-square"></i> Sửa
+                            </a>
+                            <a th:href="@{/books/delete/{id}(id=${b.id})}"
+                               class="btn btn-outline-danger btn-action"
+                               onclick="return confirm('Bạn có chắc chắn muốn xóa cuốn sách này?')">
+                                <i class="bi bi-trash3"></i> Xóa
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr th:if="${#lists.isEmpty(books)}">
+                    <td colspan="4" class="text-center py-5">
+                        <i class="bi bi-inbox text-muted" style="font-size: 2rem;"></i>
+                        <p class="text-muted mt-2">Danh sách trống, hãy thêm sách mới!</p>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+
+</body>
+</html>

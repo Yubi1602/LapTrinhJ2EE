@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/Lập Trình J2EE.iml" filepath="$PROJECT_DIR$/.idea/Lập Trình J2EE.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/bai2_letranbaokha.iml" filepath="$PROJECT_DIR$/.idea/bai2_letranbaokha.iml" />
+>>>>>>> 75dc82dd7d8e5a24895cc61056bb46fc1399fb07
     </modules>
   </component>
 </project>
